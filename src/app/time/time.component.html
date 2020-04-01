@@ -1,0 +1,8 @@
+<mat-card>
+    
+<form class="clr-form"(ngSubmit)="getTime()"  [formGroup]="timeFormGroup">
+ <mat-form-field appearance="outline" class="full-width-input" color="primary">
+    <input matInput formControlName="trainTime" required placeholder="Train depart"  (blur)="getTime()" >
+</mat-form-field>
+</form>
+</mat-card>

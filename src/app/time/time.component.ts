@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 import { TimeService } from '../services/time.service';
+import { Time } from '../entities/time.model';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-time',
@@ -10,11 +12,13 @@ import { TimeService } from '../services/time.service';
 export class TimeComponent implements OnInit {
 
   timeFormGroup: FormGroup = null;
-  time: string = '';
+  time: Time;
+  
 
   constructor(
     private fb: FormBuilder,
-    private timeService: TimeService
+    private timeService: TimeService,
+    private router: Router,
     ) { }
 
 
@@ -27,8 +31,10 @@ export class TimeComponent implements OnInit {
        let train = timeFromForm.trainTime;
        console.log('train: ' + train);
        this.timeService.getTime(train).subscribe(data => {
-        // this.router.navigate(['login']);
-        console.log('the answer from server is: ' + data.start);
+       this.time = data;
+       localStorage.setItem('timeObject', JSON.stringify(this.time));
+        console.log('the answer from server is: ' + JSON.stringify(this.time));
+       this.router.navigate(['schedule']);
       });
      }
   
